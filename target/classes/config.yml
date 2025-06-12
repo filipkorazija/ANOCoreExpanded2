@@ -1,0 +1,250 @@
+# ANOCore2 Configuration File
+# Each feature has its own configurable prefix and settings
+
+# DoubleDoors Feature
+doubledoors:
+  enabled: true
+  prefix: "&6[DoubleDoors]&r "
+
+# SlimeChunk Checker Feature
+slimechunk:
+  enabled: true
+  prefix: "&a[SlimeCheck]&r "
+  radius: 5
+  max-radius: 10
+
+# Teleport With Entities Feature
+teleportwithentities:
+  enabled: true
+  prefix: "&b[TeleportPlus]&r "
+  max-entities: 5
+
+# Join Date Feature
+joindate:
+  enabled: true
+  prefix: "&e[JoinDate]&r "
+  date-format: "yyyy-MM-dd HH:mm:ss"
+
+# Timber Feature
+timber:
+  enabled: true
+  prefix: "&2[Timber]&r "
+  default-enabled: true
+  ignore-player-placed: true
+  max-logs: 200
+  allowed-worlds:
+    - world
+    - world_nether
+    - world_the_end
+
+# Dragon Wings Feature
+dragonwings:
+  enabled: true
+  prefix: "&d[DragonWings]&r "
+  elytra-name: "&5&lDragon Wings"
+  broadcast-message: "&6{player} &fhas slain the Ender Dragon and earned their &5&lDragon Wings&f!"
+  broadcast-enabled: true
+
+# Potion Effect Commands Feature
+potion-effects:
+  enabled: true
+  prefix: "&c[Effects]&r "
+  effects:
+    speed:
+      duration: 300  # seconds
+      cooldown: 600  # seconds
+      amplifier: 1
+    jump_boost:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    regeneration:
+      duration: 300
+      cooldown: 1200
+      amplifier: 1
+    strength:
+      duration: 300
+      cooldown: 900
+      amplifier: 1
+    instant_health:
+      duration: 1
+      cooldown: 60
+      amplifier: 1
+    instant_damage:
+      duration: 1
+      cooldown: 60
+      amplifier: 1
+    slowness:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    haste:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    mining_fatigue:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    nausea:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    blindness:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    hunger:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    weakness:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    poison:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    wither:
+      duration: 300
+      cooldown: 1200
+      amplifier: 1
+    health_boost:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    absorption:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    saturation:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    glowing:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    levitation:
+      duration: 30
+      cooldown: 300
+      amplifier: 1
+    luck:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    bad_luck:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    slow_falling:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    conduit_power:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    dolphins_grace:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    bad_omen:
+      duration: 6000
+      cooldown: 7200
+      amplifier: 1
+    hero_of_the_village:
+      duration: 6000
+      cooldown: 7200
+      amplifier: 1
+    darkness:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    night_vision:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    invisibility:
+      duration: 300
+      cooldown: 900
+      amplifier: 1
+    fire_resistance:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+    water_breathing:
+      duration: 300
+      cooldown: 600
+      amplifier: 1
+
+# BiomeTP Feature
+biometp:
+  enabled: true
+  prefix: "&3[BiomeTP]&r "
+  cost: 100
+  teleport-delay: 2  # seconds before movement is allowed
+  invincibility-duration: 5  # seconds of invincibility after teleport
+  search-radius: 5000
+  confirmation-timeout: 30  # seconds to confirm teleport
+  gui:
+    title: "&3Choose a Biome to Teleport To"
+    size: 54
+
+# XPBoost Feature (integrated from LokoBoosts)
+xpboost:
+  enabled: true
+  prefix: "&6[XPBoost]&r "
+  action-bar: "&a&lXP Boost: {multiplier}x &7({duration})"
+  messages:
+    reload: "{prefix} &aYou have reloaded the configuration"
+    no-permission: "{prefix} &cYou don't have enough permission!"
+    not-int: "{prefix} &cThe argument must be an integer/number!"
+    in-progress: "{prefix} &cThere is already xp boost activated! You can force end it by using /xpboost end command"
+    end: "{prefix} &aYou have force end the current xp boost session!"
+    no-active-boost: "{prefix} &cThere is no active xp boost!"
+    check:
+      - "&f"
+      - "&6&lXP Boost Information:"
+      - "&eMultiplier: &f{multiplier}x"
+      - "&eDuration: &f{duration}"
+      - "&f"
+    start:
+      - "&f"
+      - "  &6&lXP BOOST HAS BEEN STARTED"
+      - "  &f{multiplier}x multiplier for {duration}"
+      - "&f"
+    help:
+      - "&6&lXPBoost &7- Integrated into ANOCore2"
+      - "&6/xpboost start <multiplier> <duration> &7- start the xp boost"
+      - "&6/xpboost end &7- force end the current xp boost session"
+      - "&6/xpboost check &7- check the current xp boost session information"
+      - "&6/xpboost reload &7- reload the configuration"
+
+# Grace Period Feature (integrated from LokoGP)  
+graceperiod:
+  enabled: true
+  prefix: "&9[GracePeriod]&r "
+  grace-period-duration: 10  # minutes
+  title-switch: 30  # seconds
+  bossbar-title: "&aGrace Period: &f{time}"
+  bossbar-title-additional: "&aUse &6/graceperiod end &ato bypass the grace period"
+  messages:
+    reload: "{prefix} &aYou have reloaded the configuration"
+    no-permission: "{prefix} &cYou don't have enough permission!"
+    player-not-found: "{prefix} &cThat player is not online!"
+    no-grace: "{prefix} &cYou don't have a grace period."
+    end: "{prefix} &aYou have force end your grace period!"
+    start: "{prefix} &aYou have manually start grace period for &e{player}"
+    help:
+      - "&9&lGracePeriod &7- Integrated into ANOCore2"
+      - "&6/graceperiod start <player> &7- start grace period for player"
+      - "&6/graceperiod end &7- force end grace period"
+      - "&6/graceperiod reload &7- reload the configuration"
+
+# Global Settings
+settings:
+  debug: false
+  save-interval: 300  # seconds
+  async-processing: true 

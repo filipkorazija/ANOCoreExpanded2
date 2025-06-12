@@ -1,0 +1,225 @@
+name: ANOCore2
+version: 2.0.0
+author: astonic
+main: me.astonic.ANOC2.ANOCore2
+api-version: 1.21
+description: ANO Core Phase 2 - Comprehensive Minecraft Plugin
+website: https://github.com/astonic/ANOC2
+softdepend: [Vault]
+
+commands:
+  slime:
+    description: Check for slime chunks in a radius
+    usage: /slime
+    permission: ano.slimecheck
+  joindate:
+    description: Check join date of a player
+    usage: /joindate [player]
+    permission: ano.joindate
+  timber:
+    description: Toggle timber mode for yourself
+    usage: /timber
+  biometp:
+    description: Teleport to a biome
+    usage: /biometp
+    permission: ano.biometp
+  # Potion effect commands
+  speed:
+    description: Get speed effect
+    usage: /speed
+    permission: ano.speed
+  jump:
+    description: Get jump boost effect
+    usage: /jump
+    permission: ano.jump_boost
+  regen:
+    description: Get regeneration effect
+    usage: /regen
+    permission: ano.regeneration
+  strength:
+    description: Get strength effect
+    usage: /strength
+    permission: ano.strength
+  instant_health:
+    description: Get instant health effect
+    usage: /instant_health
+    permission: ano.instant_health
+  instant_damage:
+    description: Get instant damage effect
+    usage: /instant_damage
+    permission: ano.instant_damage
+  slowness:
+    description: Get slowness effect
+    usage: /slowness
+    permission: ano.slowness
+  haste:
+    description: Get haste effect
+    usage: /haste
+    permission: ano.haste
+  mining_fatigue:
+    description: Get mining fatigue effect
+    usage: /mining_fatigue
+    permission: ano.mining_fatigue
+  nausea:
+    description: Get nausea effect
+    usage: /nausea
+    permission: ano.nausea
+  blindness:
+    description: Get blindness effect
+    usage: /blindness
+    permission: ano.blindness
+  hunger:
+    description: Get hunger effect
+    usage: /hunger
+    permission: ano.hunger
+  weakness:
+    description: Get weakness effect
+    usage: /weakness
+    permission: ano.weakness
+  poison:
+    description: Get poison effect
+    usage: /poison
+    permission: ano.poison
+  wither:
+    description: Get wither effect
+    usage: /wither
+    permission: ano.wither
+  health_boost:
+    description: Get health boost effect
+    usage: /health_boost
+    permission: ano.health_boost
+  absorption:
+    description: Get absorption effect
+    usage: /absorption
+    permission: ano.absorption
+  saturation:
+    description: Get saturation effect
+    usage: /saturation
+    permission: ano.saturation
+  glowing:
+    description: Get glowing effect
+    usage: /glowing
+    permission: ano.glowing
+  levitation:
+    description: Get levitation effect
+    usage: /levitation
+    permission: ano.levitation
+  luck:
+    description: Get luck effect
+    usage: /luck
+    permission: ano.luck
+  bad_luck:
+    description: Get bad luck effect
+    usage: /bad_luck
+    permission: ano.bad_luck
+  slow_falling:
+    description: Get slow falling effect
+    usage: /slow_falling
+    permission: ano.slow_falling
+  conduit_power:
+    description: Get conduit power effect
+    usage: /conduit_power
+    permission: ano.conduit_power
+  dolphins_grace:
+    description: Get dolphins grace effect
+    usage: /dolphins_grace
+    permission: ano.dolphins_grace
+  bad_omen:
+    description: Get bad omen effect
+    usage: /bad_omen
+    permission: ano.bad_omen
+  hero_of_the_village:
+    description: Get hero of the village effect
+    usage: /hero_of_the_village
+    permission: ano.hero_of_the_village
+  darkness:
+    description: Get darkness effect
+    usage: /darkness
+    permission: ano.darkness
+  night_vision:
+    description: Get night vision effect
+    usage: /night_vision
+    permission: ano.night_vision
+  invisibility:
+    description: Get invisibility effect
+    usage: /invisibility
+    permission: ano.invisibility
+  fire_resistance:
+    description: Get fire resistance effect
+    usage: /fire_resistance
+    permission: ano.fire_resistance
+  water_breathing:
+    description: Get water breathing effect
+    usage: /water_breathing
+    permission: ano.water_breathing
+  # XPBoost commands
+  xpboost:
+    description: Manage XP boosts
+    usage: /xpboost <start|end|check|reload>
+    aliases: [xpb, lokoboost]
+    permission: ano.xpboost
+  # Grace Period commands
+  graceperiod:
+    description: Manage grace periods
+    usage: /graceperiod <start|end|reload>
+    aliases: [grace, gp]
+    permission: ano.graceperiod
+
+permissions:
+  ano.*:
+    description: Grants access to all ANO permissions
+    children:
+      ano.slimecheck: true
+      ano.joindate: true
+      ano.biometp: true
+      ano.timber: true
+      ano.dragonelytra: true
+      # Potion effects permissions
+      ano.speed: true
+      ano.jump_boost: true
+      ano.regeneration: true
+      ano.strength: true
+      ano.instant_health: true
+      ano.instant_damage: true
+      ano.slowness: true
+      ano.haste: true
+      ano.mining_fatigue: true
+      ano.nausea: true
+      ano.blindness: true
+      ano.hunger: true
+      ano.weakness: true
+      ano.poison: true
+      ano.wither: true
+      ano.health_boost: true
+      ano.absorption: true
+      ano.saturation: true
+      ano.glowing: true
+      ano.levitation: true
+      ano.luck: true
+      ano.bad_luck: true
+      ano.slow_falling: true
+      ano.conduit_power: true
+      ano.dolphins_grace: true
+      ano.bad_omen: true
+      ano.hero_of_the_village: true
+      ano.darkness: true
+      ano.night_vision: true
+      ano.invisibility: true
+      ano.fire_resistance: true
+      ano.water_breathing: true
+      ano.xpboost: true
+      ano.graceperiod: true
+  ano.slimecheck:
+    description: Allows use of /slime command
+  ano.joindate:
+    description: Allows use of /joindate command
+  ano.biometp:
+    description: Allows use of /biometp command
+  ano.timber:
+    description: Allows use of timber feature
+  ano.dragonelytra:
+    description: Allows receiving dragon elytra reward
+  ano.xpboost:
+    description: Allows use of /xpboost command
+  ano.graceperiod:
+    description: Allows use of /graceperiod command 

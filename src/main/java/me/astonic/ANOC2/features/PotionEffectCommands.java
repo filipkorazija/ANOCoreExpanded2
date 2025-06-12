@@ -31,36 +31,38 @@ public class PotionEffectCommands implements CommandExecutor {
     }
     
     private void initializePotionCommands() {
-        // Register all potion effect commands
+        // Register all potion effect commands (matching plugin.yml command names)
         potionCommands.put("speed", PotionEffectType.SPEED);
         potionCommands.put("slowness", PotionEffectType.SLOWNESS);
         potionCommands.put("haste", PotionEffectType.HASTE);
-        potionCommands.put("miningfatigue", PotionEffectType.MINING_FATIGUE);
+        potionCommands.put("mining_fatigue", PotionEffectType.MINING_FATIGUE);
         potionCommands.put("strength", PotionEffectType.STRENGTH);
         potionCommands.put("weakness", PotionEffectType.WEAKNESS);
         potionCommands.put("jump", PotionEffectType.JUMP_BOOST);
         potionCommands.put("nausea", PotionEffectType.NAUSEA);
-        potionCommands.put("regeneration", PotionEffectType.REGENERATION);
-        potionCommands.put("resistance", PotionEffectType.RESISTANCE);
-        potionCommands.put("fireresistance", PotionEffectType.FIRE_RESISTANCE);
-        potionCommands.put("waterbreathing", PotionEffectType.WATER_BREATHING);
+        potionCommands.put("regen", PotionEffectType.REGENERATION);
+        potionCommands.put("instant_health", PotionEffectType.INSTANT_HEALTH);
+        potionCommands.put("instant_damage", PotionEffectType.INSTANT_DAMAGE);
+        potionCommands.put("fire_resistance", PotionEffectType.FIRE_RESISTANCE);
+        potionCommands.put("water_breathing", PotionEffectType.WATER_BREATHING);
         potionCommands.put("invisibility", PotionEffectType.INVISIBILITY);
         potionCommands.put("blindness", PotionEffectType.BLINDNESS);
-        potionCommands.put("nightvision", PotionEffectType.NIGHT_VISION);
+        potionCommands.put("night_vision", PotionEffectType.NIGHT_VISION);
         potionCommands.put("hunger", PotionEffectType.HUNGER);
         potionCommands.put("poison", PotionEffectType.POISON);
         potionCommands.put("wither", PotionEffectType.WITHER);
-        potionCommands.put("healthboost", PotionEffectType.HEALTH_BOOST);
+        potionCommands.put("health_boost", PotionEffectType.HEALTH_BOOST);
         potionCommands.put("absorption", PotionEffectType.ABSORPTION);
         potionCommands.put("saturation", PotionEffectType.SATURATION);
+        potionCommands.put("glowing", PotionEffectType.GLOWING);
         potionCommands.put("levitation", PotionEffectType.LEVITATION);
         potionCommands.put("luck", PotionEffectType.LUCK);
-        potionCommands.put("unluck", PotionEffectType.UNLUCK);
-        potionCommands.put("slowfalling", PotionEffectType.SLOW_FALLING);
-        potionCommands.put("conduitpower", PotionEffectType.CONDUIT_POWER);
-        potionCommands.put("dolphinsgrace", PotionEffectType.DOLPHINS_GRACE);
-        potionCommands.put("badomen", PotionEffectType.BAD_OMEN);
-        potionCommands.put("heroofthevillage", PotionEffectType.HERO_OF_THE_VILLAGE);
+        potionCommands.put("bad_luck", PotionEffectType.UNLUCK);
+        potionCommands.put("slow_falling", PotionEffectType.SLOW_FALLING);
+        potionCommands.put("conduit_power", PotionEffectType.CONDUIT_POWER);
+        potionCommands.put("dolphins_grace", PotionEffectType.DOLPHINS_GRACE);
+        potionCommands.put("bad_omen", PotionEffectType.BAD_OMEN);
+        potionCommands.put("hero_of_the_village", PotionEffectType.HERO_OF_THE_VILLAGE);
         potionCommands.put("darkness", PotionEffectType.DARKNESS);
     }
     
@@ -93,7 +95,7 @@ public class PotionEffectCommands implements CommandExecutor {
         }
         
         // Check permission
-        String permission = "ano.potioneffect." + commandName;
+        String permission = "ano." + commandName;
         if (!player.hasPermission(permission)) {
             MessageUtil.sendMessage(player, prefix + "&cYou don't have permission to use this command!");
             return true;
@@ -114,7 +116,7 @@ public class PotionEffectCommands implements CommandExecutor {
         }
         
         // Get configuration for this specific effect
-        String effectConfigPath = "potion-effects.effects." + commandName.replace("_", "_");
+        String effectConfigPath = "potion-effects.effects." + commandName;
         int duration = plugin.getConfig().getInt(effectConfigPath + ".duration", 300) * 20; // Convert to ticks
         int amplifier = plugin.getConfig().getInt(effectConfigPath + ".amplifier", 0);
         

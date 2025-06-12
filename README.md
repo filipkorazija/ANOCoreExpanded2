@@ -27,16 +27,16 @@ The plugin now includes all requested features with full functionality.
 src/main/java/me/astonic/ANOC2/
 ├── ANOCore2.java                    # Main plugin class
 ├── features/                        # Individual feature implementations
-│   ├── DoubleDoors.java            # ✅ Complete
-│   ├── SlimeChunkChecker.java      # ✅ Complete
-│   ├── TeleportWithEntities.java   # ✅ Complete
-│   ├── JoinDateTracker.java        # ✅ Complete
-│   ├── XPBoost.java                # ✅ Complete (Integrated)
-│   ├── GracePeriod.java            # ✅ Complete (Integrated)
-│   ├── TimberFeature.java          # ✅ Complete - Tree cutting with toggle
-│   ├── DragonWings.java            # ✅ Complete - Custom elytra rewards
-│   ├── PotionEffectCommands.java   # ✅ Complete - All 29 potion effects
-│   └── BiomeTP.java                # ✅ Complete - GUI biome teleportation
+│   ├── DoubleDoors.java            # ✅ Complete - WORKS IMRPOVE DETECTION
+│   ├── SlimeChunkChecker.java      # ✅ Complete - WORKS IMPROVE THE MESSAGE, MAKE IT CONFIGURABLE
+│   ├── TeleportWithEntities.java   # ✅ Complete - WORKS
+│   ├── JoinDateTracker.java        # ✅ Complete - ADD OLD PLAYERS
+│   ├── XPBoost.java                # ✅ Complete (Integrated) - WORKS
+│   ├── GracePeriod.java            # ✅ Complete (Integrated) - WORKS
+│   ├── TimberFeature.java          # ✅ Complete - Tree cutting with toggle - NOT WORKING
+│   ├── DragonWings.java            # ✅ Complete - Custom elytra rewards - WORKS
+│   ├── PotionEffectCommands.java   # ✅ Complete - All 29 potion effects - WORKS
+│   └── BiomeTP.java                # ✅ Complete - GUI biome teleportation - WORKS, ADD A BETTER GUI MAKE IT CONFIGURABLE
 ├── managers/                        # Core management classes
 │   ├── DataManager.java            # Player data persistence
 │   ├── CooldownManager.java        # Command cooldown management

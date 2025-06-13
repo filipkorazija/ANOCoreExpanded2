@@ -1,10 +1,17 @@
-# ANOCore2 Configuration File
-# Each feature has its own configurable prefix and settings
+#    _____            __                 __        
+#   /  _  \   _______/  |_  ____   ____ |__| ____  
+#  /  /_\  \ /  ___/\   __\/  _ \ /    \|  |/ ___\ 
+# /    |    \\___ \  |  | (  <_> )   |  \  \  \___ 
+# \____|__  /____  > |__|  \____/|___|  /__|\___  >
+#         \/     \/                   \/        \/ 
 
 # DoubleDoors Feature
 doubledoors:
   enabled: true
   prefix: "&6[DoubleDoors]&r "
+  preserve-hinges: false        # Keep existing door hinges instead of forcing optimal ones
+  require-frame: false          # Require solid blocks around doors for double door behavior
+  debug: false                  # Enable debug messages for troubleshooting
 
 # SlimeChunk Checker Feature
 slimechunk:
@@ -12,6 +19,7 @@ slimechunk:
   prefix: "&a[SlimeCheck]&r "
   radius: 5
   max-radius: 10
+
 
 # Teleport With Entities Feature
 teleportwithentities:
@@ -24,6 +32,7 @@ joindate:
   enabled: true
   prefix: "&e[JoinDate]&r "
   date-format: "yyyy-MM-dd HH:mm:ss"
+
 
 # Timber Feature
 timber:
@@ -41,9 +50,19 @@ timber:
 dragonwings:
   enabled: true
   prefix: "&d[DragonWings]&r "
-  elytra-name: "&5&lDragon Wings"
-  broadcast-message: "&6{player} &fhas slain the Ender Dragon and earned their &5&lDragon Wings&f!"
   broadcast-enabled: true
+  reward-item:
+    material: "ELYTRA"                    # Item type to give as reward
+    name: "&5&lDragon Wings"              # Display name of the item
+    lore:                                 # Lore lines for the item
+      - "&7Earned by slaying the Ender Dragon"
+      - "&7A symbol of triumph and courage"
+      - "&5&oMay your flights be swift and high"
+    enchantments:
+      UNBREAKING: 3
+      MENDING: 1
+    glow: false
+
 
 # Potion Effect Commands Feature
 potion-effects:
@@ -197,30 +216,7 @@ xpboost:
   enabled: true
   prefix: "&6[XPBoost]&r "
   action-bar: "&a&lXP Boost: {multiplier}x &7({duration})"
-  messages:
-    reload: "{prefix} &aYou have reloaded the configuration"
-    no-permission: "{prefix} &cYou don't have enough permission!"
-    not-int: "{prefix} &cThe argument must be an integer/number!"
-    in-progress: "{prefix} &cThere is already xp boost activated! You can force end it by using /xpboost end command"
-    end: "{prefix} &aYou have force end the current xp boost session!"
-    no-active-boost: "{prefix} &cThere is no active xp boost!"
-    check:
-      - "&f"
-      - "&6&lXP Boost Information:"
-      - "&eMultiplier: &f{multiplier}x"
-      - "&eDuration: &f{duration}"
-      - "&f"
-    start:
-      - "&f"
-      - "  &6&lXP BOOST HAS BEEN STARTED"
-      - "  &f{multiplier}x multiplier for {duration}"
-      - "&f"
-    help:
-      - "&6&lXPBoost &7- Integrated into ANOCore2"
-      - "&6/xpboost start <multiplier> <duration> &7- start the xp boost"
-      - "&6/xpboost end &7- force end the current xp boost session"
-      - "&6/xpboost check &7- check the current xp boost session information"
-      - "&6/xpboost reload &7- reload the configuration"
+
 
 # Grace Period Feature (integrated from LokoGP)  
 graceperiod:
@@ -230,18 +226,7 @@ graceperiod:
   title-switch: 30  # seconds
   bossbar-title: "&aGrace Period: &f{time}"
   bossbar-title-additional: "&aUse &6/graceperiod end &ato bypass the grace period"
-  messages:
-    reload: "{prefix} &aYou have reloaded the configuration"
-    no-permission: "{prefix} &cYou don't have enough permission!"
-    player-not-found: "{prefix} &cThat player is not online!"
-    no-grace: "{prefix} &cYou don't have a grace period."
-    end: "{prefix} &aYou have force end your grace period!"
-    start: "{prefix} &aYou have manually start grace period for &e{player}"
-    help:
-      - "&9&lGracePeriod &7- Integrated into ANOCore2"
-      - "&6/graceperiod start <player> &7- start grace period for player"
-      - "&6/graceperiod end &7- force end grace period"
-      - "&6/graceperiod reload &7- reload the configuration"
+
 
 # Global Settings
 settings:

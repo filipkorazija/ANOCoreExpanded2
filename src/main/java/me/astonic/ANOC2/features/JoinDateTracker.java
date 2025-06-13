@@ -14,6 +14,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class JoinDateTracker implements CommandExecutor, Listener {
     
@@ -41,7 +42,8 @@ public class JoinDateTracker implements CommandExecutor, Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         
-        // Record join date if this is the first time
+        // Still record join date for potential future use/backup
+        // But we'll primarily use Bukkit's getFirstPlayed() method
         if (!plugin.getDataManager().hasJoinDate(player.getUniqueId())) {
             plugin.getDataManager().setJoinDate(player.getUniqueId(), new Date());
         }
@@ -50,26 +52,29 @@ public class JoinDateTracker implements CommandExecutor, Listener {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("ano.joindate")) {
-            MessageUtil.sendMessage(sender, prefix + "&cYou don't have permission to use this command!");
+            sendMessage(sender, "no-permission");
             return true;
         }
         
         if (args.length == 0) {
             // Check own join date
             if (!(sender instanceof Player)) {
-                MessageUtil.sendMessage(sender, prefix + "&cOnly players can check their own join date!");
+                sendMessage(sender, "console-usage");
                 return true;
             }
             
             Player player = (Player) sender;
-            Date joinDate = plugin.getDataManager().getJoinDate(player.getUniqueId());
+            Date joinDate = getActualFirstJoinDate(player);
             
             if (joinDate == null) {
-                MessageUtil.sendMessage(player, prefix + "&cYour join date is not recorded!");
+                sendMessage(sender, "no-data", "{player}", player.getName());
                 return true;
             }
             
-            MessageUtil.sendMessage(player, prefix + "&aYou first joined the server on: &e" + dateFormat.format(joinDate));
+            long daysAgo = calculateDaysAgo(joinDate);
+            sendMessage(player, "own-join-date",
+                "{date}", dateFormat.format(joinDate),
+                "{days_ago}", String.valueOf(daysAgo));
             
         } else if (args.length == 1) {
             // Check another player's join date
@@ -77,37 +82,71 @@ public class JoinDateTracker implements CommandExecutor, Listener {
             
             // Try to get online player first
             Player targetPlayer = Bukkit.getPlayer(targetName);
-            if (targetPlayer != null) {
-                Date joinDate = plugin.getDataManager().getJoinDate(targetPlayer.getUniqueId());
-                
-                if (joinDate == null) {
-                    MessageUtil.sendMessage(sender, prefix + "&cJoin date for " + targetPlayer.getName() + " is not recorded!");
-                    return true;
-                }
-                
-                MessageUtil.sendMessage(sender, prefix + "&a" + targetPlayer.getName() + " first joined the server on: &e" + dateFormat.format(joinDate));
+            OfflinePlayer offlinePlayer = targetPlayer != null ? targetPlayer : Bukkit.getOfflinePlayer(targetName);
+            
+            if (!offlinePlayer.hasPlayedBefore()) {
+                sendMessage(sender, "player-not-found", "{player}", targetName);
                 return true;
             }
             
-            // Try offline player
-            OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(targetName);
-            if (offlinePlayer.hasPlayedBefore()) {
-                Date joinDate = plugin.getDataManager().getJoinDate(offlinePlayer.getUniqueId());
-                
-                if (joinDate == null) {
-                    MessageUtil.sendMessage(sender, prefix + "&cJoin date for " + offlinePlayer.getName() + " is not recorded!");
-                    return true;
-                }
-                
-                MessageUtil.sendMessage(sender, prefix + "&a" + offlinePlayer.getName() + " first joined the server on: &e" + dateFormat.format(joinDate));
-            } else {
-                MessageUtil.sendMessage(sender, prefix + "&cPlayer '" + targetName + "' has never played on this server!");
+            Date joinDate = getActualFirstJoinDate(offlinePlayer);
+            
+            if (joinDate == null) {
+                sendMessage(sender, "no-data", "{player}", offlinePlayer.getName());
+                return true;
             }
             
+            long daysAgo = calculateDaysAgo(joinDate);
+            sendMessage(sender, "other-join-date",
+                "{player}", offlinePlayer.getName(),
+                "{date}", dateFormat.format(joinDate),
+                "{days_ago}", String.valueOf(daysAgo));
+            
         } else {
-            MessageUtil.sendMessage(sender, prefix + "&cUsage: /joindate [player]");
+            sendMessage(sender, "usage");
         }
         
         return true;
+    }
+    
+    /**
+     * Gets the actual first join date using Bukkit's built-in tracking
+     */
+    private Date getActualFirstJoinDate(OfflinePlayer player) {
+        long firstPlayed = player.getFirstPlayed();
+        
+        // If no first played time is recorded, fall back to our tracking
+        if (firstPlayed == 0 || firstPlayed == -1) {
+            return plugin.getDataManager().getJoinDate(player.getUniqueId());
+        }
+        
+        return new Date(firstPlayed);
+    }
+    
+    /**
+     * Calculates how many days ago the join date was
+     */
+    private long calculateDaysAgo(Date joinDate) {
+        long currentTime = System.currentTimeMillis();
+        long joinTime = joinDate.getTime();
+        long diffInMillis = currentTime - joinTime;
+        return TimeUnit.MILLISECONDS.toDays(diffInMillis);
+    }
+    
+    /**
+     * Sends a configurable message with placeholder replacement
+     */
+    private void sendMessage(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "joindate." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        String message = plugin.getMessageManager().getMessage(fullPath, allPlaceholders);
+        MessageUtil.sendMessage(sender, message);
     }
 } 

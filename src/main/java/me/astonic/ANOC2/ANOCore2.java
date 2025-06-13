@@ -1,8 +1,10 @@
 package me.astonic.ANOC2;
 
+import me.astonic.ANOC2.commands.MainCommand;
 import me.astonic.ANOC2.features.*;
 import me.astonic.ANOC2.managers.*;
 import me.astonic.ANOC2.utils.ConfigManager;
+import me.astonic.ANOC2.utils.MessageManager;
 import me.astonic.ANOC2.utils.MessageUtil;
 // Vault imports are handled dynamically
 import org.bukkit.plugin.java.JavaPlugin;
@@ -16,6 +18,7 @@ public class ANOCore2 extends JavaPlugin {
     
     // Managers
     private ConfigManager configManager;
+    private MessageManager messageManager;
     private DataManager dataManager;
     private CooldownManager cooldownManager;
     private TimberManager timberManager;
@@ -75,6 +78,7 @@ public class ANOCore2 extends JavaPlugin {
     
     private void initializeManagers() {
         configManager = new ConfigManager(this);
+        messageManager = new MessageManager(this);
         dataManager = new DataManager(this);
         cooldownManager = new CooldownManager();
         timberManager = new TimberManager(this);
@@ -153,6 +157,11 @@ public class ANOCore2 extends JavaPlugin {
     }
     
     private void registerCommands() {
+        // Register main command
+        MainCommand mainCommand = new MainCommand(this);
+        getCommand("anocore2").setExecutor(mainCommand);
+        getCommand("anocore2").setTabCompleter(mainCommand);
+        
         if (slimeChunkChecker != null) slimeChunkChecker.registerCommands();
         if (joinDateTracker != null) joinDateTracker.registerCommands();
         if (timberFeature != null) timberFeature.registerCommands();
@@ -199,6 +208,7 @@ public class ANOCore2 extends JavaPlugin {
     public void reloadPlugin() {
         reloadConfig();
         configManager.reloadConfig();
+        messageManager.reloadMessages();
         
         // Reinitialize features
         initializeFeatures();
@@ -213,6 +223,10 @@ public class ANOCore2 extends JavaPlugin {
     
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+    
+    public MessageManager getMessageManager() {
+        return messageManager;
     }
     
     public DataManager getDataManager() {

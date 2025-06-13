@@ -1,6 +1,8 @@
 me\astonic\ANOC2\managers\TimberManager.class
+me\astonic\ANOC2\features\DoubleDoors$DoorCandidate.class
 me\astonic\ANOC2\ANOCore2.class
 me\astonic\ANOC2\features\GracePeriod.class
+me\astonic\ANOC2\utils\MessageManager.class
 me\astonic\ANOC2\managers\CooldownManager.class
 me\astonic\ANOC2\features\BiomeTP.class
 me\astonic\ANOC2\features\PotionEffectCommands.class
@@ -12,6 +14,7 @@ me\astonic\ANOC2\utils\MessageUtil.class
 me\astonic\ANOC2\features\TeleportWithEntities.class
 me\astonic\ANOC2\features\JoinDateTracker.class
 me\astonic\ANOC2\utils\ConfigManager.class
+me\astonic\ANOC2\commands\MainCommand.class
 me\astonic\ANOC2\graceperiod\GraceUser.class
 me\astonic\ANOC2\managers\DataManager.class
 me\astonic\ANOC2\features\DoubleDoors.class

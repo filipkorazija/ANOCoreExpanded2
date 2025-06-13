@@ -29,14 +29,14 @@ public class SlimeChunkChecker implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            MessageUtil.sendMessage(sender, prefix + "&cOnly players can use this command!");
+            sendMessage(sender, "console-usage");
             return true;
         }
         
         Player player = (Player) sender;
         
         if (!player.hasPermission("ano.slimecheck")) {
-            MessageUtil.sendMessage(player, prefix + "&cYou don't have permission to use this command!");
+            sendMessage(player, "no-permission");
             return true;
         }
         
@@ -48,16 +48,17 @@ public class SlimeChunkChecker implements CommandExecutor {
             try {
                 int customRadius = Integer.parseInt(args[0]);
                 if (customRadius > maxRadius) {
-                    MessageUtil.sendMessage(player, prefix + "&cMaximum radius is " + maxRadius + " chunks!");
+                    sendMessage(player, "max-radius-exceeded", 
+                        "{max_radius}", String.valueOf(maxRadius));
                     return true;
                 }
                 if (customRadius < 1) {
-                    MessageUtil.sendMessage(player, prefix + "&cRadius must be at least 1 chunk!");
+                    sendMessage(player, "radius-too-small");
                     return true;
                 }
                 radius = customRadius;
             } catch (NumberFormatException e) {
-                MessageUtil.sendMessage(player, prefix + "&cInvalid radius! Please use a number.");
+                sendMessage(player, "invalid-radius");
                 return true;
             }
         }
@@ -79,14 +80,20 @@ public class SlimeChunkChecker implements CommandExecutor {
             }
         }
         
+        // Calculate total chunks searched
+        int totalChunks = (radius * 2 + 1) * (radius * 2 + 1);
+        
         // Send results
-        MessageUtil.sendMessage(player, prefix + "&aSlime chunk search results:");
-        MessageUtil.sendMessage(player, "&7Searched " + ((radius * 2 + 1) * (radius * 2 + 1)) + " chunks in a " + radius + " chunk radius");
+        sendMessage(player, "search-header");
+        sendMessage(player, "search-summary",
+            "{total_chunks}", String.valueOf(totalChunks),
+            "{radius}", String.valueOf(radius));
         
         if (slimeChunks.isEmpty()) {
-            MessageUtil.sendMessage(player, "&cNo slime chunks found in the searched area!");
+            sendMessage(player, "no-chunks-found");
         } else {
-            MessageUtil.sendMessage(player, "&aFound " + slimeChunks.size() + " slime chunk(s):");
+            sendMessage(player, "chunks-found-header",
+                "{slime_count}", String.valueOf(slimeChunks.size()));
             
             for (Chunk chunk : slimeChunks) {
                 int distance = Math.max(
@@ -95,19 +102,37 @@ public class SlimeChunkChecker implements CommandExecutor {
                 );
                 
                 String direction = getDirection(playerChunk, chunk);
-                MessageUtil.sendMessage(player, 
-                    "&7- Chunk (" + chunk.getX() + ", " + chunk.getZ() + ") " +
-                    "&a" + distance + " chunks " + direction
-                );
+                sendMessage(player, "chunk-format",
+                    "{chunk_x}", String.valueOf(chunk.getX()),
+                    "{chunk_z}", String.valueOf(chunk.getZ()),
+                    "{distance}", String.valueOf(distance),
+                    "{direction}", direction);
             }
             
             // Check if player is currently in a slime chunk
             if (isSlimeChunk(playerChunk)) {
-                MessageUtil.sendMessage(player, "&a&lYou are currently standing in a slime chunk!");
+                sendMessage(player, "current-chunk");
             }
         }
         
         return true;
+    }
+    
+    /**
+     * Sends a configurable message with placeholder replacement
+     */
+    private void sendMessage(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "slimechunk." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        String message = plugin.getMessageManager().getMessage(fullPath, allPlaceholders);
+        MessageUtil.sendMessage(sender, message);
     }
     
     private boolean isSlimeChunk(Chunk chunk) {

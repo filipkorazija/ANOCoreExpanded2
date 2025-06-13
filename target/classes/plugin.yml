@@ -164,6 +164,12 @@ commands:
     usage: /graceperiod <start|end|reload>
     aliases: [grace, gp]
     permission: ano.graceperiod
+  # Main plugin help command
+  anocore2:
+    description: ANOCore2 main command and help
+    usage: /anocore2 [help|reload]
+    aliases: [anoc2, ano]
+    permission: ano.admin
 
 permissions:
   ano.*:
@@ -209,6 +215,7 @@ permissions:
       ano.water_breathing: true
       ano.xpboost: true
       ano.graceperiod: true
+      ano.admin: true
   ano.slimecheck:
     description: Allows use of /slime command
   ano.joindate:
@@ -222,4 +229,6 @@ permissions:
   ano.xpboost:
     description: Allows use of /xpboost command
   ano.graceperiod:
-    description: Allows use of /graceperiod command 
+    description: Allows use of /graceperiod command
+  ano.admin:
+    description: Admin commands for ANOCore2 

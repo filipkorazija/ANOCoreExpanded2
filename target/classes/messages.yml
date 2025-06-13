@@ -1,0 +1,143 @@
+#    _____            __                 __        
+#   /  _  \   _______/  |_  ____   ____ |__| ____  
+#  /  /_\  \ /  ___/\   __\/  _ \ /    \|  |/ ___\ 
+# /    |    \\___ \  |  | (  <_> )   |  \  \  \___ 
+# \____|__  /____  > |__|  \____/|___|  /__|\___  >
+#         \/     \/                   \/        \/ 
+#
+# ANOCore2 Messages Configuration
+# This file contains all customizable messages for each feature
+# Use & for color codes (e.g., &a for green, &c for red)
+
+# ================================
+# SLIME CHUNK CHECKER MESSAGES
+# ================================
+slimechunk:
+  # Available placeholders: {prefix}, {max_radius}, {radius}, {total_chunks}, {slime_count}, {chunk_x}, {chunk_z}, {distance}, {direction}
+  no-permission: "{prefix}&cYou don't have permission to use this command!"
+  console-usage: "{prefix}&cOnly players can use this command!"
+  max-radius-exceeded: "{prefix}&cMaximum radius is {max_radius} chunks!"
+  invalid-radius: "{prefix}&cInvalid radius! Please use a number."
+  radius-too-small: "{prefix}&cRadius must be at least 1 chunk!"
+  search-header: "{prefix}&aSlime chunk search results:"
+  search-summary: "&7Searched {total_chunks} chunks in a {radius} chunk radius"
+  no-chunks-found: "&cNo slime chunks found in the searched area!"
+  chunks-found-header: "&aFound {slime_count} slime chunk(s):"
+  chunk-format: "&7- Chunk ({chunk_x}, {chunk_z}) &a{distance} chunks {direction}"
+  current-chunk: "&a&lYou are currently standing in a slime chunk!"
+
+# ================================
+# JOIN DATE TRACKER MESSAGES  
+# ================================
+joindate:
+  # Available placeholders: {prefix}, {player}, {date}, {days_ago}
+  no-permission: "{prefix}&cYou don't have permission to use this command!"
+  console-usage: "{prefix}&cOnly players can check their own join date!"
+  own-join-date: "{prefix}&aYou first joined the server on: &e{date} &7({days_ago} days ago)"
+  other-join-date: "{prefix}&a{player} first joined the server on: &e{date} &7({days_ago} days ago)"
+  player-not-found: "{prefix}&cPlayer '{player}' has never played on this server!"
+  no-data: "{prefix}&cJoin date for {player} could not be determined!"
+  usage: "{prefix}&cUsage: /joindate [player]"
+
+# ================================
+# DRAGON WINGS MESSAGES
+# ================================
+dragonwings:
+  # Available placeholders: {prefix}, {player}, {item_name}
+  no-permission: "{prefix}&cYou don't have permission to receive dragon rewards!"
+  inventory-full: "{prefix}&cYour inventory is full! {item_name} &cdropped on the ground."
+  reward-received: "{prefix}&aCongratulations! You have earned {item_name} &afor slaying the Ender Dragon!"
+  broadcast-message: "&6{player} &fhas slain the Ender Dragon and earned their {item_name}&f!"
+
+# ================================
+# XP BOOST MESSAGES
+# ================================
+xpboost:
+  # Available placeholders: {prefix}, {multiplier}, {duration}
+  reload: "{prefix} &aYou have reloaded the configuration"
+  no-permission: "{prefix} &cYou don't have enough permission!"
+  not-int: "{prefix} &cThe argument must be an integer/number!"
+  in-progress: "{prefix} &cThere is already xp boost activated! You can force end it by using /xpboost end command"
+  end: "{prefix} &aYou have force end the current xp boost session!"
+  no-active-boost: "{prefix} &cThere is no active xp boost!"
+  check:
+    - "&f"
+    - "&6&lXP Boost Information:"
+    - "&eMultiplier: &f{multiplier}x"
+    - "&eDuration: &f{duration}"
+    - "&f"
+  start:
+    - "&f"
+    - "  &6&lXP BOOST HAS BEEN STARTED"
+    - "  &f{multiplier}x multiplier for {duration}"
+    - "&f"
+  help:
+    - "&6&lXPBoost &7- Integrated into ANOCore2"
+    - "&6/xpboost start <multiplier> <duration> &7- start the xp boost"
+    - "&6/xpboost end &7- force end the current xp boost session"
+    - "&6/xpboost check &7- check the current xp boost session information"
+    - "&6/xpboost reload &7- reload the configuration"
+
+# ================================
+# GRACE PERIOD MESSAGES
+# ================================
+graceperiod:
+  # Available placeholders: {prefix}, {player}, {time}
+  reload: "{prefix} &aYou have reloaded the configuration"
+  no-permission: "{prefix} &cYou don't have enough permission!"
+  player-not-found: "{prefix} &cThat player is not online!"
+  no-grace: "{prefix} &cYou don't have a grace period."
+  end: "{prefix} &aYou have force end your grace period!"
+  start: "{prefix} &aYou have manually start grace period for &e{player}"
+  help:
+    - "&9&lGracePeriod &7- Integrated into ANOCore2"
+    - "&6/graceperiod start <player> &7- start grace period for player"
+    - "&6/graceperiod end &7- force end grace period"
+    - "&6/graceperiod reload &7- reload the configuration"
+
+# ================================
+# DOUBLE DOORS MESSAGES
+# ================================
+doubledoors:
+  # Available placeholders: {prefix}, {player}
+  debug-no-adjacent: "{prefix}&7No suitable adjacent door found for door at {location}"
+  debug-invalid-pair: "{prefix}&7Doors at {main_location} and {adjacent_location} are not a valid double door pair"
+  debug-synchronizing: "{prefix}&7Synchronizing double doors at {main_location} and {adjacent_location}"
+
+# ================================
+# TIMBER MESSAGES (Future use)
+# ================================
+timber:
+  # Available placeholders: {prefix}, {player}, {logs_cut}, {max_logs}
+  toggle-enabled: "{prefix}&aTimber mode enabled!"
+  toggle-disabled: "{prefix}&cTimber mode disabled!"
+  max-logs-exceeded: "{prefix}&cToo many logs! Maximum is {max_logs} logs per tree."
+  world-not-allowed: "{prefix}&cTimber is not allowed in this world!"
+
+# ================================
+# TELEPORT WITH ENTITIES MESSAGES (Future use)
+# ================================
+teleportwithentities:
+  # Available placeholders: {prefix}, {player}, {entity_count}, {max_entities}
+  too-many-entities: "{prefix}&cToo many entities nearby! Maximum is {max_entities}."
+  entities-teleported: "{prefix}&aSuccessfully teleported with {entity_count} entities!"
+
+# ================================
+# BIOME TP MESSAGES (Future use)
+# ================================
+biometp:
+  # Available placeholders: {prefix}, {player}, {biome}, {cost}, {distance}
+  insufficient-funds: "{prefix}&cYou need {cost} coins to teleport!"
+  biome-not-found: "{prefix}&cCould not find {biome} within search radius!"
+  teleport-success: "{prefix}&aSuccessfully teleported to {biome}!"
+  teleport-cancelled: "{prefix}&cTeleportation cancelled!"
+
+# ================================
+# MAIN COMMAND MESSAGES
+# ================================
+anocore2:
+  # Available placeholders: {prefix}, {version}
+  no-permission: "&cYou don't have permission to use this command!"
+  reload-success: "&aANOCore2 configuration and messages reloaded!"
+  version-info: "&6ANOCore2 &fv{version}"
+  author-info: "&7Created by &eAstonic" 

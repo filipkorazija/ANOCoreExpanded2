@@ -1,230 +1,381 @@
-# ANOCore2 - Comprehensive Minecraft Plugin
+# ANOCore2 - Complete Admin Documentation
 
-ANO Core Phase 2 is a comprehensive Minecraft plugin for version 1.21.4 using Java 21, packed with multiple useful features for server administrators and players.
+**Version:** 2.0.0  
+**Author:** Astonic  
+**Minecraft Version:** 1.21.4+  
+**Server Software:** Paper, Purpur, Spigot
 
-## Features
+ANOCore2 is a comprehensive Minecraft plugin that combines multiple quality-of-life features and utilities into a single, well-organized package. This documentation serves as a complete guide for server administrators.
 
-### ✅ Fully Implemented Features
+---
 
-1. **DoubleDoors** - Synchronizes adjacent doors to open/close together with vanilla-like behavior
-2. **SlimeChunkChecker** - Check for slime chunks in a configurable radius with `/slime`
-3. **TeleportWithEntities** - Teleport with entities in boats and other vehicles
-4. **JoinDateTracker** - Track and display when players first joined the server
-5. **XPBoost** - Global XP multiplier system with action bar display (Integrated from LokoBoosts)
-6. **GracePeriod** - New player protection system with boss bar display (Integrated from LokoGP)
-7. **Timber** - Tree cutting feature with toggle capability and player-placed block tracking
-8. **DragonWings** - Award custom enchanted elytra when players kill the Ender Dragon
-9. **PotionEffectCommands** - All 29 potion effect commands with individual cooldowns and config
-10. **BiomeTP** - GUI-based biome teleportation with economy integration and async biome finding
+## 📋 Table of Contents
 
-### 🎯 All Features Complete!
+1. [Installation](#installation)
+2. [Core Features](#core-features)
+3. [Commands Reference](#commands-reference)
+4. [Permissions](#permissions)
+5. [Configuration](#configuration)
+6. [Message Customization](#message-customization)
+7. [Feature Details](#feature-details)
+8. [Troubleshooting](#troubleshooting)
 
-The plugin now includes all requested features with full functionality.
+---
 
-## Plugin Structure
+## 🚀 Installation
 
-```
-src/main/java/me/astonic/ANOC2/
-├── ANOCore2.java                    # Main plugin class
-├── features/                        # Individual feature implementations
-│   ├── DoubleDoors.java            # ✅ Complete - WORKS IMRPOVE DETECTION
-│   ├── SlimeChunkChecker.java      # ✅ Complete - WORKS IMPROVE THE MESSAGE, MAKE IT CONFIGURABLE
-│   ├── TeleportWithEntities.java   # ✅ Complete - WORKS
-│   ├── JoinDateTracker.java        # ✅ Complete - ADD OLD PLAYERS
-│   ├── XPBoost.java                # ✅ Complete (Integrated) - WORKS
-│   ├── GracePeriod.java            # ✅ Complete (Integrated) - WORKS
-│   ├── TimberFeature.java          # ✅ Complete - Tree cutting with toggle - NOT WORKING
-│   ├── DragonWings.java            # ✅ Complete - Custom elytra rewards - WORKS
-│   ├── PotionEffectCommands.java   # ✅ Complete - All 29 potion effects - WORKS
-│   └── BiomeTP.java                # ✅ Complete - GUI biome teleportation - WORKS, ADD A BETTER GUI MAKE IT CONFIGURABLE
-├── managers/                        # Core management classes
-│   ├── DataManager.java            # Player data persistence
-│   ├── CooldownManager.java        # Command cooldown management
-│   └── TimberManager.java          # Tree cutting logic
-├── utils/                          # Utility classes
-│   ├── ConfigManager.java          # Configuration management
-│   └── MessageUtil.java            # Message formatting utilities
-├── xpboost/                        # XPBoost specific classes
-│   └── ActiveBooster.java          # Booster data structure
-└── graceperiod/                    # Grace Period specific classes
-    └── GraceUser.java              # Grace period user management
-```
+1. Download the latest ANOCore2.jar file
+2. Place it in your server's `plugins/` folder
+3. Restart your server
+4. Configure the plugin in `plugins/ANOCore2/config.yml`
+5. Customize messages in `plugins/ANOCore2/messages.yml`
 
-## Configuration
+### Dependencies
+- **Optional:** Vault (for economy features in BiomeTP)
 
-The plugin uses a comprehensive configuration system with individual prefixes for each feature:
+---
+
+## 🎯 Core Features
+
+### **Utility Features**
+- **Double Doors**: Automatic synchronization of adjacent doors
+- **Slime Chunk Checker**: Find slime chunks in your world
+- **Join Date Tracker**: Track when players first joined
+- **Timber**: Tree cutting with one swing
+- **Dragon Wings**: Reward players for killing the Ender Dragon
+- **Teleport with Entities**: Keep pets when teleporting
+
+### **Boost Systems**
+- **XP Boost**: Server-wide experience multipliers
+- **Grace Period**: Protection for new players
+
+### **Teleportation**
+- **BiomeTP**: Teleport to specific biomes (requires Vault)
+
+### **Potion Effects**
+- **Quick Commands**: Easy access to all potion effects with cooldowns
+
+---
+
+## 📝 Commands Reference
+
+### **Admin Commands**
+| Command | Description | Permission | Aliases |
+|---------|-------------|------------|---------|
+| `/anocore2 help` | Show complete command help | `ano.admin` | `/anoc2`, `/ano` |
+| `/anocore2 reload` | Reload configuration and messages | `ano.admin` | |
+| `/anocore2 version` | Show plugin version info | `ano.admin` | |
+
+### **Core Features**
+| Command | Description | Permission | Usage |
+|---------|-------------|------------|-------|
+| `/slime [radius]` | Check for slime chunks around you | `ano.slimecheck` | `/slime 5` |
+| `/joindate [player]` | View first join date | `ano.joindate` | `/joindate Steve` |
+| `/timber` | Toggle timber mode on/off | `ano.timber` | `/timber` |
+
+### **Boost Systems**
+| Command | Description | Permission | Usage |
+|---------|-------------|------------|-------|
+| `/xpboost start <multiplier> <duration>` | Start XP boost | `ano.xpboost` | `/xpboost start 2.0 300` |
+| `/xpboost end` | End current XP boost | `ano.xpboost` | |
+| `/xpboost check` | Check current boost status | `ano.xpboost` | |
+| `/xpboost reload` | Reload XP boost config | `ano.xpboost` | |
+| `/graceperiod start <player>` | Give grace period to player | `ano.graceperiod` | `/graceperiod start Steve` |
+| `/graceperiod end` | End your grace period | `ano.graceperiod` | |
+| `/graceperiod reload` | Reload grace period config | `ano.graceperiod` | |
+
+### **Teleportation**
+| Command | Description | Permission | Requirements |
+|---------|-------------|------------|--------------|
+| `/biometp` | Open biome teleport GUI | `ano.biometp` | Vault + Economy |
+
+### **Potion Effects**
+All potion effect commands follow the pattern: `/[effect_name]`
+
+| Command | Effect | Permission | Cooldown |
+|---------|--------|------------|----------|
+| `/speed` | Speed | `ano.speed` | 10 minutes |
+| `/jump_boost` | Jump Boost | `ano.jump_boost` | 10 minutes |
+| `/regeneration` | Regeneration | `ano.regeneration` | 20 minutes |
+| `/strength` | Strength | `ano.strength` | 15 minutes |
+| `/instant_health` | Instant Health | `ano.instant_health` | 1 minute |
+| `/night_vision` | Night Vision | `ano.night_vision` | 10 minutes |
+| `/invisibility` | Invisibility | `ano.invisibility` | 15 minutes |
+| `/fire_resistance` | Fire Resistance | `ano.fire_resistance` | 10 minutes |
+| `/water_breathing` | Water Breathing | `ano.water_breathing` | 10 minutes |
+
+**Additional Effects Available:**
+`/instant_damage`, `/slowness`, `/haste`, `/mining_fatigue`, `/nausea`, `/blindness`, `/hunger`, `/weakness`, `/poison`, `/wither`, `/health_boost`, `/absorption`, `/saturation`, `/glowing`, `/levitation`, `/luck`, `/bad_luck`, `/slow_falling`, `/conduit_power`, `/dolphins_grace`, `/bad_omen`, `/hero_of_the_village`, `/darkness`
+
+---
+
+## 🔐 Permissions
+
+### **Master Permission**
+- `ano.*` - Grants access to all ANO permissions
+
+### **Individual Permissions**
+| Permission | Description | Default |
+|------------|-------------|---------|
+| `ano.admin` | Admin commands (reload, version) | OP |
+| `ano.slimecheck` | Use slime chunk checker | Everyone |
+| `ano.joindate` | Check join dates | Everyone |
+| `ano.timber` | Use timber feature | Everyone |
+| `ano.dragonelytra` | Receive dragon wings | Everyone |
+| `ano.biometp` | Use biome teleportation | Everyone |
+| `ano.xpboost` | Manage XP boosts | OP |
+| `ano.graceperiod` | Manage grace periods | OP |
+
+### **Potion Effect Permissions**
+Each effect has its own permission: `ano.[effect_name]`
+- Example: `ano.speed`, `ano.regeneration`, `ano.night_vision`
+
+---
+
+## ⚙️ Configuration
+
+### **Main Configuration** (`config.yml`)
 
 ```yaml
-# Each feature has its own configurable prefix and settings
+# Feature Toggle Example
 doubledoors:
   enabled: true
   prefix: "&6[DoubleDoors]&r "
+  preserve-hinges: false
+  require-frame: false
+  debug: false
 
-# XPBoost Feature (integrated from LokoBoosts)
+slimechunk:
+  enabled: true
+  prefix: "&a[SlimeCheck]&r "
+  radius: 5
+  max-radius: 10
+
+# XP Boost Configuration
 xpboost:
   enabled: true
   prefix: "&6[XPBoost]&r "
   action-bar: "&a&lXP Boost: {multiplier}x &7({duration})"
-  messages:
-    # Complete configuration for all XPBoost features
 
-# Grace Period Feature (integrated from LokoGP)  
+# Grace Period Configuration
 graceperiod:
   enabled: true
   prefix: "&9[GracePeriod]&r "
   grace-period-duration: 10  # minutes
+  title-switch: 30  # seconds
   bossbar-title: "&aGrace Period: &f{time}"
-  # Complete configuration for all Grace Period features
 
-# ... and more for each feature
+# Dragon Wings Reward Configuration
+dragonwings:
+  enabled: true
+  prefix: "&d[DragonWings]&r "
+  broadcast-enabled: true
+  reward-item:
+    material: "ELYTRA"
+    name: "&5&lDragon Wings"
+    lore:
+      - "&7Earned by slaying the Ender Dragon"
+    enchantments:
+      UNBREAKING: 3
+      MENDING: 1
+    glow: false
+
+# Potion Effects Configuration
+potion-effects:
+  enabled: true
+  prefix: "&c[Effects]&r "
+  effects:
+    speed:
+      duration: 300  # seconds
+      cooldown: 600  # seconds
+      amplifier: 1
 ```
 
-## Commands
+### **Feature-Specific Settings**
 
-### All Available Commands:
+#### **Double Doors**
+- `preserve-hinges`: Keep existing door hinges instead of optimizing
+- `require-frame`: Require solid blocks around doors
+- `debug`: Enable debug messages
 
-**Core Features:**
-- `/slime [radius]` - Check for slime chunks (Permission: `ano.slimecheck`)
-- `/joindate [player]` - Check join dates (Permission: `ano.joindate`)
-- `/timber` - Toggle timber mode (Permission: `ano.timber`)
-- `/biometp` - Open biome teleportation GUI (Permission: `ano.biometp`)
+#### **Slime Chunk Checker**
+- `radius`: Default search radius
+- `max-radius`: Maximum allowed radius
 
-**Integrated Systems:**
-- `/xpboost <start|end|check|reload>` - Manage XP boosts (Permission: `ano.xpboost`)
-- `/graceperiod <start|end|reload>` - Manage grace periods (Permission: `ano.graceperiod`)
+#### **Timber**
+- `default-enabled`: New players start with timber enabled
+- `ignore-player-placed`: Only cut naturally generated trees
+- `max-logs`: Maximum logs per tree
+- `allowed-worlds`: Worlds where timber works
 
-**Potion Effect Commands (29 total):**
-- `/speed [duration] [amplifier]` - Speed effect
-- `/jump [duration] [amplifier]` - Jump boost effect
-- `/strength [duration] [amplifier]` - Strength effect
-- `/regeneration [duration] [amplifier]` - Regeneration effect
-- `/nightvision [duration] [amplifier]` - Night vision effect
-- `/invisibility [duration] [amplifier]` - Invisibility effect
-- `/fireresistance [duration] [amplifier]` - Fire resistance effect
-- `/waterbreathing [duration] [amplifier]` - Water breathing effect
-- `/haste [duration] [amplifier]` - Haste effect
-- `/resistance [duration] [amplifier]` - Resistance effect
-- `/absorption [duration] [amplifier]` - Absorption effect
-- `/saturation [duration] [amplifier]` - Saturation effect
-- `/slowfalling [duration] [amplifier]` - Slow falling effect
-- `/conduitpower [duration] [amplifier]` - Conduit power effect
-- `/dolphinsgrace [duration] [amplifier]` - Dolphins grace effect
-- `/luck [duration] [amplifier]` - Luck effect
-- `/healthboost [duration] [amplifier]` - Health boost effect
-- `/levitation [duration] [amplifier]` - Levitation effect
-- And 12 more negative effects (slowness, weakness, poison, etc.)
-
-*Each potion effect command has individual cooldowns that start after the effect ends.*
-
-## Permissions
-
-- `ano.*` - All permissions
-- `ano.slimecheck` - Use slime chunk checker
-- `ano.joindate` - Check join dates
-- `ano.xpboost` - Use XP boost commands
-- `ano.graceperiod` - Use grace period commands
-- `ano.timber` - Use timber feature
-- `ano.biometp` - Use biome teleportation
-- Individual potion effect permissions (e.g., `ano.speed`, `ano.jump_boost`)
-
-## Features Details
-
-### XPBoost (Integrated from LokoBoosts)
-- Global XP multiplier system
-- Real-time action bar display showing current multiplier and remaining time
-- Commands: `/xpboost start <multiplier> <duration>`, `/xpboost end`, `/xpboost check`, `/xpboost reload`
-- Automatic integration with vanilla Minecraft XP
-- Persistent booster storage across server restarts
-- Server-wide broadcasts when boosts start
-
-### Grace Period (Integrated from LokoGP)
-- Automatic protection for new players joining for the first time
-- Customizable duration (default: 10 minutes)
-- Dynamic boss bar display with countdown timer
-- Color-coded progress (Green → Yellow → Red as time runs out)
-- Complete damage immunity during grace period
-- Commands: `/graceperiod start <player>`, `/graceperiod end`, `/graceperiod reload`
-- Manual grace period assignment for specific players
-
-## Dependencies
-
-- **Spigot API 1.21.4**
-- **Java 21**
-- **Vault** (Optional, for economy features)
-
-## Build Instructions
-
-1. Ensure you have Java 21 and Maven installed
-2. Clone the repository
-3. Run `mvn clean package`
-4. The compiled JAR will be in the `target/` directory
-
-## Installation
-
-1. Place the compiled JAR in your server's `plugins/` directory
-2. Start the server to generate configuration files
-3. Configure the plugin in `plugins/ANOCore2/config.yml`
-4. Restart the server or use `/reload` (if supported)
-
-## Integration Notes
-
-The XPBoost and GracePeriod features have been successfully integrated from the original LokoBoosts and LokoGP plugins with the following improvements:
-
-- **Unified Configuration**: All settings now use the ANOCore2 configuration system
-- **Consistent Messaging**: All features use the same message formatting system
-- **Data Management**: Integrated with ANOCore2's data persistence system
-- **Permission System**: Follows the `ano.*` permission structure
-- **Prefix System**: Each feature has its own configurable prefix
-
-## Feature Details
-
-### 🌳 Timber Feature
-- **Toggle Command**: `/timber` - Enable/disable timber mode per player
-- **Smart Detection**: Ignores player-placed blocks (configurable)
-- **Tool Durability**: Properly damages axes when cutting trees
-- **World Restrictions**: Configurable allowed worlds
-- **Max Logs**: Configurable maximum logs per tree (default: 200)
-- **Axe Requirement**: Only works when holding an axe
-
-### 🐉 Dragon Wings Feature
-- **Automatic Reward**: Custom elytra given when killing Ender Dragon
-- **Custom Item**: "Dragon Wings" with special name, lore, and Unbreaking III
-- **Broadcast System**: Configurable server-wide announcements
-- **Permission Check**: Requires `ano.dragonelytra` permission
-- **Inventory Management**: Drops item if inventory is full
-
-### 🧪 Potion Effect Commands
-- **29 Different Effects**: All Minecraft potion effects available as commands
-- **Individual Cooldowns**: Each effect has its own cooldown timer
-- **Config-Based**: Duration, amplifier, and cooldown configurable per effect
-- **Smart Cooldowns**: Cooldown starts AFTER the effect ends
-- **Permission System**: Individual permissions for each effect
-- **Argument Support**: Optional duration and amplifier arguments
-
-### 🗺️ BiomeTP Feature
-- **GUI Interface**: Beautiful inventory-based biome selection
-- **12 Biomes Available**: Plains, Forest, Desert, Jungle, Taiga, Swamp, Ocean, Mushroom Fields, Ice Spikes, Badlands, Savanna, Dark Forest
-- **Economy Integration**: Configurable cost per teleportation (Vault support)
-- **Async Search**: Non-blocking biome finding with configurable search radius
-- **Safe Teleportation**: Finds safe Y coordinates automatically
-- **Search Limits**: Configurable max attempts and search radius
-
-## Testing Recommendations
-
-1. **Test DoubleDoors**: ✅ Fixed - Doors now open in correct directions with proper hinge behavior (vanilla-like)
-2. **Test Timber**: Verify player-placed blocks are ignored, tool durability works
-3. **Test Dragon Wings**: Kill Ender Dragon and verify custom elytra reward
-4. **Test Potion Commands**: Try various effects with different durations/amplifiers
-5. **Test BiomeTP**: Use GUI to teleport to different biomes, test economy integration
-6. **Test Integration**: Verify XPBoost and GracePeriod work as expected
-
-## Support
-
-This plugin is built specifically for your server requirements. For modifications or additional features, please refer to the source code or contact the developer.
+#### **BiomeTP**
+- `cost`: Economy cost per teleport
+- `search-radius`: How far to search for biomes
+- `teleport-delay`: Delay before teleport
+- `invincibility-duration`: Protection after teleport
 
 ---
 
-**Version**: 2.0.0  
-**Minecraft**: 1.21.4  
-**Java**: 21  
-**Author**: astonic 
+## 💬 Message Customization
+
+### **Message Configuration** (`messages.yml`)
+
+All messages are fully customizable with color codes and placeholders:
+
+```yaml
+slimechunk:
+  no-permission: "{prefix}&cYou don't have permission to use this command!"
+  search-header: "{prefix}&aSlime chunk search results:"
+  chunks-found-header: "&aFound {slime_count} slime chunk(s):"
+  chunk-format: "&7- Chunk ({chunk_x}, {chunk_z}) &a{distance} chunks {direction}"
+
+xpboost:
+  start:
+    - "&f"
+    - "  &6&lXP BOOST HAS BEEN STARTED"
+    - "  &f{multiplier}x multiplier for {duration}"
+    - "&f"
+```
+
+### **Available Placeholders**
+
+#### **Global Placeholders**
+- `{prefix}` - Feature prefix
+- `{player}` - Player name
+
+#### **Feature-Specific Placeholders**
+
+**Slime Chunk Checker:**
+- `{radius}`, `{max_radius}`, `{total_chunks}`, `{slime_count}`
+- `{chunk_x}`, `{chunk_z}`, `{distance}`, `{direction}`
+
+**Join Date Tracker:**
+- `{date}`, `{days_ago}`
+
+**XP Boost:**
+- `{multiplier}`, `{duration}`
+
+**Dragon Wings:**
+- `{item_name}`
+
+---
+
+## 📖 Feature Details
+
+### **Double Doors**
+- Automatically detects and synchronizes adjacent doors
+- Smart hinge calculation for natural opening
+- Configurable validation requirements
+- Debug mode for troubleshooting
+
+### **Slime Chunk Checker**
+- Accurate slime chunk detection using Minecraft's algorithm
+- Customizable search radius with admin limits
+- Detailed results with distance and direction
+- Real-time chunk analysis
+
+### **Join Date Tracker**
+- Uses actual server join data (not plugin-specific)
+- Shows exact join date and time
+- Calculates days since first join
+- Works for both online and offline players
+
+### **Timber**
+- One-swing tree cutting with configurable limits
+- Respects player-placed vs natural blocks
+- World-specific enablement
+- Individual player toggle
+
+### **Dragon Wings**
+- Fully configurable reward items (not limited to elytra)
+- Custom enchantments and glow effects
+- Broadcast messages to server
+- Automatic inventory management
+
+### **XP Boost**
+- Server-wide experience multipliers
+- Temporary duration-based boosts
+- Real-time action bar display
+- Administrative controls
+
+### **Grace Period**
+- New player protection system
+- Configurable duration and boss bar
+- Damage immunity and PvP protection
+- Manual start/end controls
+
+### **BiomeTP**
+- GUI-based biome selection
+- Economy integration (requires Vault)
+- Distance-based pricing
+- Safety checks and confirmation system
+
+---
+
+## 🔧 Troubleshooting
+
+### **Common Issues**
+
+#### **Commands Not Working**
+1. Check if the feature is enabled in `config.yml`
+2. Verify player has correct permissions
+3. Ensure plugin loaded without errors
+4. Try `/anocore2 reload`
+
+#### **Messages Not Displaying**
+1. Check `messages.yml` syntax
+2. Verify color codes are correct (`&a`, `&c`, etc.)
+3. Ensure placeholders are properly formatted
+4. Try reloading messages with `/anocore2 reload`
+
+#### **Economy Features Not Working**
+1. Install Vault plugin
+2. Install an economy plugin (EssentialsX, etc.)
+3. Restart server
+4. Verify economy is detected in console
+
+### **Debug Mode**
+Enable debug mode for specific features in `config.yml`:
+```yaml
+doubledoors:
+  debug: true
+```
+
+### **Log Files**
+Check server console and logs for:
+- Plugin loading errors
+- Permission issues
+- Configuration problems
+- Feature-specific debug messages
+
+### **Performance Issues**
+- Reduce slime chunk max radius
+- Lower timber max logs limit
+- Increase potion effect cooldowns
+- Disable unused features
+
+---
+
+## 📞 Support
+
+### **Getting Help**
+1. Check this documentation first
+2. Review server console for errors
+3. Test with `/anocore2 reload`
+4. Verify configuration syntax
+
+### **Bug Reporting**
+When reporting issues, include:
+- Plugin version (`/anocore2 version`)
+- Server version and type
+- Relevant configuration sections
+- Error messages from console
+- Steps to reproduce
+
+### **Feature Requests**
+All features are designed to be configurable and extensible. Check configuration options before requesting new features.
+
+---
+
+**ANOCore2 v2.0.0** - Created by Astonic  
+*A comprehensive solution for Minecraft server administration*

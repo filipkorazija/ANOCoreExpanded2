@@ -174,7 +174,7 @@ public class GracePeriod implements Listener, CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("ano.graceperiod")) {
-            MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.no-permission", prefix + "&cNo permission!"));
+            sendMessage(sender, "no-permission");
             return true;
         }
         
@@ -192,7 +192,7 @@ public class GracePeriod implements Listener, CommandExecutor, TabCompleter {
                 
                 Player target = Bukkit.getPlayer(args[1]);
                 if (target == null) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.player-not-found"));
+                    sendMessage(sender, "player-not-found");
                     return true;
                 }
                 
@@ -202,8 +202,7 @@ public class GracePeriod implements Listener, CommandExecutor, TabCompleter {
                 }
                 
                 GraceUser.register(target, plugin);
-                MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.start")
-                    .replace("{player}", target.getName()));
+                sendMessage(sender, "start", "{player}", target.getName());
                 break;
                 
             case "end":
@@ -215,18 +214,19 @@ public class GracePeriod implements Listener, CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 GraceUser user = GraceUser.of(player);
                 if (user == null) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.no-grace"));
+                    sendMessage(sender, "no-grace");
                     return true;
                 }
                 
                 removeBossBar(player.getUniqueId());
                 user.destroy();
-                MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.end"));
+                sendMessage(sender, "end");
                 break;
                 
             case "reload":
                 plugin.reloadConfig();
-                MessageUtil.sendMessage(sender, plugin.getConfig().getString("graceperiod.messages.reload"));
+                plugin.getMessageManager().reloadMessages();
+                sendMessage(sender, "reload");
                 break;
                 
             default:
@@ -238,10 +238,44 @@ public class GracePeriod implements Listener, CommandExecutor, TabCompleter {
     }
     
     private void sendHelpMessage(CommandSender sender) {
-        List<String> helpMessages = plugin.getConfig().getStringList("graceperiod.messages.help");
-        for (String msg : helpMessages) {
-            MessageUtil.sendMessage(sender, msg);
+        sendMessageList(sender, "help");
+    }
+    
+    /**
+     * Sends a configurable message with placeholder replacement
+     */
+    private void sendMessage(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "graceperiod." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        String message = plugin.getMessageManager().getMessage(fullPath, allPlaceholders);
+        MessageUtil.sendMessage(sender, message);
+    }
+    
+    /**
+     * Sends a configurable message list with placeholder replacement
+     */
+    private List<String> sendMessageList(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "graceperiod." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        List<String> messages = plugin.getMessageManager().getMessageList(fullPath, allPlaceholders);
+        for (String message : messages) {
+            MessageUtil.sendMessage(sender, message);
         }
+        return messages;
     }
     
     @Override

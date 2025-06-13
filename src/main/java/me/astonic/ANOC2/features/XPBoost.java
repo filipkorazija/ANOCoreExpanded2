@@ -113,7 +113,7 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!sender.hasPermission("ano.xpboost")) {
-            MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.no-permission", prefix + "&cNo permission!"));
+            sendMessage(sender, "no-permission");
             return true;
         }
         
@@ -130,7 +130,7 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
                 }
                 
                 if (!boosters.isEmpty()) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.in-progress"));
+                    sendMessage(sender, "in-progress");
                     return true;
                 }
                 
@@ -146,52 +146,48 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
                     boosters.add(new ActiveBooster(multiplier, duration));
                     saveBoosters();
                     
-                    List<String> startMessages = plugin.getConfig().getStringList("xpboost.messages.start");
-                    for (String msg : startMessages) {
-                        MessageUtil.sendMessage(sender, msg.replace("{multiplier}", String.valueOf(multiplier))
-                                .replace("{duration}", timeFormat(duration)));
-                    }
+                    List<String> startMessages = sendMessageList(sender, "start", 
+                        "{multiplier}", String.valueOf(multiplier),
+                        "{duration}", timeFormat(duration));
                     
                     // Broadcast to all players
                     for (Player player : Bukkit.getOnlinePlayers()) {
-                        for (String msg : startMessages) {
-                            MessageUtil.sendMessage(player, msg.replace("{multiplier}", String.valueOf(multiplier))
-                                    .replace("{duration}", timeFormat(duration)));
-                        }
+                        sendMessageList(player, "start", 
+                            "{multiplier}", String.valueOf(multiplier),
+                            "{duration}", timeFormat(duration));
                     }
                     
                 } catch (NumberFormatException e) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.not-int"));
+                    sendMessage(sender, "not-int");
                 }
                 break;
                 
             case "end":
                 if (boosters.isEmpty()) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.no-active-boost"));
+                    sendMessage(sender, "no-active-boost");
                     return true;
                 }
                 
                 boosters.clear();
                 saveBoosters();
-                MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.end"));
+                sendMessage(sender, "end");
                 break;
                 
             case "check":
                 if (boosters.isEmpty()) {
-                    MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.no-active-boost"));
+                    sendMessage(sender, "no-active-boost");
                     return true;
                 }
                 
-                List<String> checkMessages = plugin.getConfig().getStringList("xpboost.messages.check");
-                for (String msg : checkMessages) {
-                    MessageUtil.sendMessage(sender, msg.replace("{multiplier}", textFormat(getTotalMultiplier()))
-                            .replace("{duration}", timeFormat(getTotalDuration())));
-                }
+                sendMessageList(sender, "check",
+                    "{multiplier}", textFormat(getTotalMultiplier()),
+                    "{duration}", timeFormat(getTotalDuration()));
                 break;
                 
             case "reload":
                 plugin.reloadConfig();
-                MessageUtil.sendMessage(sender, plugin.getConfig().getString("xpboost.messages.reload"));
+                plugin.getMessageManager().reloadMessages();
+                sendMessage(sender, "reload");
                 break;
                 
             default:
@@ -203,10 +199,44 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
     }
     
     private void sendHelpMessage(CommandSender sender) {
-        List<String> helpMessages = plugin.getConfig().getStringList("xpboost.messages.help");
-        for (String msg : helpMessages) {
-            MessageUtil.sendMessage(sender, msg);
+        sendMessageList(sender, "help");
+    }
+    
+    /**
+     * Sends a configurable message with placeholder replacement
+     */
+    private void sendMessage(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "xpboost." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        String message = plugin.getMessageManager().getMessage(fullPath, allPlaceholders);
+        MessageUtil.sendMessage(sender, message);
+    }
+    
+    /**
+     * Sends a configurable message list with placeholder replacement
+     */
+    private List<String> sendMessageList(CommandSender sender, String messageKey, String... placeholders) {
+        // Create the full path to the message in messages.yml
+        String fullPath = "xpboost." + messageKey;
+        
+        // Add prefix to placeholders
+        String[] allPlaceholders = new String[placeholders.length + 2];
+        allPlaceholders[0] = "{prefix}";
+        allPlaceholders[1] = prefix;
+        System.arraycopy(placeholders, 0, allPlaceholders, 2, placeholders.length);
+        
+        List<String> messages = plugin.getMessageManager().getMessageList(fullPath, allPlaceholders);
+        for (String message : messages) {
+            MessageUtil.sendMessage(sender, message);
         }
+        return messages;
     }
     
     @Override

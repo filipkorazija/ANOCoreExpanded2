@@ -202,10 +202,12 @@ potion-effects:
 biometp:
   enabled: true
   prefix: "&3[BiomeTP]&r "
-  cost: 100
+  cost: 500
   teleport-delay: 2  # seconds before movement is allowed
   invincibility-duration: 5  # seconds of invincibility after teleport
   search-radius: 5000
+  max-attempts: 100  # max search attempts per teleport
+  world-border-safety-margin: 50  # blocks from world border to avoid teleporting
   confirmation-timeout: 30  # seconds to confirm teleport
   gui:
     title: "&3Choose a Biome to Teleport To"

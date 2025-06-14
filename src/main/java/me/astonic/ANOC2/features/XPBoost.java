@@ -53,8 +53,8 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
     }
     
     private void loadBoosters() {
-        // Load from ANOCore2's data manager
-        Object boosterData = plugin.getDataManager().getPlayerData("xpboost");
+        // Load from ANOCore2's data manager using global data storage
+        Object boosterData = plugin.getDataManager().getGlobalData("xpboost");
         if (boosterData instanceof List) {
             @SuppressWarnings("unchecked")
             List<String> boosterList = (List<String>) boosterData;
@@ -65,11 +65,16 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
                         double multiplier = Double.parseDouble(parts[0]);
                         int duration = Integer.parseInt(parts[1]);
                         boosters.add(new ActiveBooster(multiplier, duration));
+                        plugin.getLogger().info("Loaded XP booster: " + multiplier + "x for " + duration + " seconds");
                     } catch (NumberFormatException e) {
                         plugin.getLogger().warning("Invalid booster data: " + boosterStr);
                     }
                 }
             }
+        }
+        
+        if (!boosters.isEmpty()) {
+            plugin.getLogger().info("Loaded " + boosters.size() + " active XP boosters from save data");
         }
     }
     
@@ -78,7 +83,14 @@ public class XPBoost implements Listener, CommandExecutor, TabCompleter {
         for (ActiveBooster booster : boosters) {
             boosterList.add(booster.getMultiplier() + ":" + booster.getDuration());
         }
-        plugin.getDataManager().setPlayerData("xpboost", boosterList);
+        plugin.getDataManager().setGlobalData("xpboost", boosterList);
+        
+        // Force save to disk immediately
+        plugin.getDataManager().saveAllData();
+        
+        if (!boosters.isEmpty()) {
+            plugin.getLogger().info("Saved " + boosters.size() + " active XP boosters to disk");
+        }
     }
     
     private void startBoostTask() {

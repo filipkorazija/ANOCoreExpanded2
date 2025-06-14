@@ -16,6 +16,7 @@ public class DataManager {
     private final Map<String, Object> playerData;
     private final Map<UUID, Date> joinDates;
     private final Set<UUID> timberEnabled;
+    private final Map<String, Object> globalData;
     
     private File dataFile;
     private FileConfiguration dataConfig;
@@ -25,6 +26,7 @@ public class DataManager {
         this.playerData = new ConcurrentHashMap<>();
         this.joinDates = new ConcurrentHashMap<>();
         this.timberEnabled = new HashSet<>();
+        this.globalData = new ConcurrentHashMap<>();
         
         setupDataFile();
         loadData();
@@ -68,6 +70,13 @@ public class DataManager {
                 }
             }
         }
+        
+        // Load global data
+        if (dataConfig.contains("globalData")) {
+            for (String key : dataConfig.getConfigurationSection("globalData").getKeys(false)) {
+                globalData.put(key, dataConfig.get("globalData." + key));
+            }
+        }
     }
     
     public void saveAllData() {
@@ -82,6 +91,11 @@ public class DataManager {
             timberList.add(uuid.toString());
         }
         dataConfig.set("timber", timberList);
+        
+        // Save global data
+        for (Map.Entry<String, Object> entry : globalData.entrySet()) {
+            dataConfig.set("globalData." + entry.getKey(), entry.getValue());
+        }
         
         try {
             dataConfig.save(dataFile);
@@ -128,5 +142,18 @@ public class DataManager {
     
     public boolean hasPlayerData(String key) {
         return playerData.containsKey(key);
+    }
+    
+    // Global data methods
+    public void setGlobalData(String key, Object value) {
+        globalData.put(key, value);
+    }
+    
+    public Object getGlobalData(String key) {
+        return globalData.get(key);
+    }
+    
+    public boolean hasGlobalData(String key) {
+        return globalData.containsKey(key);
     }
 } 

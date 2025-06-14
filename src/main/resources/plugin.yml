@@ -216,19 +216,124 @@ permissions:
       ano.xpboost: true
       ano.graceperiod: true
       ano.admin: true
+  # Individual potion effect permissions
+  ano.speed:
+    description: Allows use of /speed command
+    default: false
+  ano.jump_boost:
+    description: Allows use of /jump command  
+    default: false
+  ano.regeneration:
+    description: Allows use of /regen command
+    default: false
+  ano.strength:
+    description: Allows use of /strength command
+    default: false
+  ano.instant_health:
+    description: Allows use of /instant_health command
+    default: false
+  ano.instant_damage:
+    description: Allows use of /instant_damage command
+    default: false
+  ano.slowness:
+    description: Allows use of /slowness command
+    default: false
+  ano.haste:
+    description: Allows use of /haste command
+    default: false
+  ano.mining_fatigue:
+    description: Allows use of /mining_fatigue command
+    default: false
+  ano.nausea:
+    description: Allows use of /nausea command
+    default: false
+  ano.blindness:
+    description: Allows use of /blindness command
+    default: false
+  ano.hunger:
+    description: Allows use of /hunger command
+    default: false
+  ano.weakness:
+    description: Allows use of /weakness command
+    default: false
+  ano.poison:
+    description: Allows use of /poison command
+    default: false
+  ano.wither:
+    description: Allows use of /wither command
+    default: false
+  ano.health_boost:
+    description: Allows use of /health_boost command
+    default: false
+  ano.absorption:
+    description: Allows use of /absorption command
+    default: false
+  ano.saturation:
+    description: Allows use of /saturation command
+    default: false
+  ano.glowing:
+    description: Allows use of /glowing command
+    default: false
+  ano.levitation:
+    description: Allows use of /levitation command
+    default: false
+  ano.luck:
+    description: Allows use of /luck command
+    default: false
+  ano.bad_luck:
+    description: Allows use of /bad_luck command
+    default: false
+  ano.slow_falling:
+    description: Allows use of /slow_falling command
+    default: false
+  ano.conduit_power:
+    description: Allows use of /conduit_power command
+    default: false
+  ano.dolphins_grace:
+    description: Allows use of /dolphins_grace command
+    default: false
+  ano.bad_omen:
+    description: Allows use of /bad_omen command
+    default: false
+  ano.hero_of_the_village:
+    description: Allows use of /hero_of_the_village command
+    default: false
+  ano.darkness:
+    description: Allows use of /darkness command
+    default: false
+  ano.night_vision:
+    description: Allows use of /night_vision command
+    default: false
+  ano.invisibility:
+    description: Allows use of /invisibility command
+    default: false
+  ano.fire_resistance:
+    description: Allows use of /fire_resistance command
+    default: false
+  ano.water_breathing:
+    description: Allows use of /water_breathing command
+    default: false
   ano.slimecheck:
     description: Allows use of /slime command
+    default: false
   ano.joindate:
     description: Allows use of /joindate command
+    default: false
   ano.biometp:
     description: Allows use of /biometp command
+    default: false
   ano.timber:
     description: Allows use of timber feature
+    default: true
   ano.dragonelytra:
     description: Allows receiving dragon elytra reward
+    default: true
   ano.xpboost:
     description: Allows use of /xpboost command
+    default: false
   ano.graceperiod:
     description: Allows use of /graceperiod command
+    default: false
   ano.admin:
-    description: Admin commands for ANOCore2 
+    description: Admin commands for ANOCore2
+    default: false 

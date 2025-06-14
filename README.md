@@ -117,18 +117,19 @@ All potion effect commands follow the pattern: `/[effect_name]`
 ### **Individual Permissions**
 | Permission | Description | Default |
 |------------|-------------|---------|
-| `ano.admin` | Admin commands (reload, version) | OP |
-| `ano.slimecheck` | Use slime chunk checker | Everyone |
-| `ano.joindate` | Check join dates | Everyone |
-| `ano.timber` | Use timber feature | Everyone |
-| `ano.dragonelytra` | Receive dragon wings | Everyone |
-| `ano.biometp` | Use biome teleportation | Everyone |
-| `ano.xpboost` | Manage XP boosts | OP |
-| `ano.graceperiod` | Manage grace periods | OP |
+| `ano.admin` | Admin commands (reload, version) | false |
+| `ano.slimecheck` | Use slime chunk checker | false |
+| `ano.joindate` | Check join dates | false |
+| `ano.timber` | Use timber feature | true |
+| `ano.dragonelytra` | Receive dragon wings | true |
+| `ano.biometp` | Use biome teleportation | false |
+| `ano.xpboost` | Manage XP boosts | false |
+| `ano.graceperiod` | Manage grace periods | false |
 
 ### **Potion Effect Permissions**
-Each effect has its own permission: `ano.[effect_name]`
+Each effect has its own permission: `ano.[effect_name]` (Default: false)
 - Example: `ano.speed`, `ano.regeneration`, `ano.night_vision`
+- All potion effect permissions are restricted by default and must be granted explicitly
 
 ---
 
@@ -209,8 +210,10 @@ potion-effects:
 - `allowed-worlds`: Worlds where timber works
 
 #### **BiomeTP**
-- `cost`: Economy cost per teleport
-- `search-radius`: How far to search for biomes
+- `cost`: Economy cost per teleport (default: 500)
+- `search-radius`: How far to search for biomes (default: 5000)
+- `max-attempts`: Maximum search attempts per teleport (default: 100)
+- `world-border-safety-margin`: Blocks from world border to avoid teleporting (default: 50)
 - `teleport-delay`: Delay before teleport
 - `invincibility-duration`: Protection after teleport
 
@@ -294,9 +297,10 @@ xpboost:
 
 ### **XP Boost**
 - Server-wide experience multipliers
+- **Persistent through server restarts** - boosts now save to disk
 - Temporary duration-based boosts
 - Real-time action bar display
-- Administrative controls
+- Administrative controls with immediate saving
 
 ### **Grace Period**
 - New player protection system
@@ -305,10 +309,12 @@ xpboost:
 - Manual start/end controls
 
 ### **BiomeTP**
-- GUI-based biome selection
+- GUI-based biome selection with 60+ biomes
 - Economy integration (requires Vault)
-- Distance-based pricing
-- Safety checks and confirmation system
+- **World border safety system** - prevents teleporting outside safe zones
+- Configurable safety margins to avoid border damage
+- Dual-stage search algorithm for better success rates
+- Real-time cost display in GUI
 
 ---
 
@@ -318,9 +324,10 @@ xpboost:
 
 #### **Commands Not Working**
 1. Check if the feature is enabled in `config.yml`
-2. Verify player has correct permissions
+2. Verify player has correct permissions (many are now `default: false`)
 3. Ensure plugin loaded without errors
-4. Try `/anocore2 reload`
+4. Check console for registration warnings
+5. Try `/anocore2 reload`
 
 #### **Messages Not Displaying**
 1. Check `messages.yml` syntax
@@ -334,9 +341,21 @@ xpboost:
 3. Restart server
 4. Verify economy is detected in console
 
+#### **Plugin Won't Load / Compilation Errors**
+1. Ensure you have the correct plugin jar file
+2. Check server console for specific error messages
+3. Verify server version compatibility (1.21.4+)
+4. If using source code, rebuild with Maven: `mvn clean compile package`
+5. Remove old plugin files before installing new ones
+
 ### **Debug Mode**
-Enable debug mode for specific features in `config.yml`:
+Enable debug mode for troubleshooting in `config.yml`:
 ```yaml
+# Global debug mode
+settings:
+  debug: true
+
+# Feature-specific debug
 doubledoors:
   debug: true
 ```
@@ -353,6 +372,13 @@ Check server console and logs for:
 - Lower timber max logs limit
 - Increase potion effect cooldowns
 - Disable unused features
+- Reduce BiomeTP search radius and max attempts
+
+### **Permission Issues**
+Many permissions changed to `default: false` for security:
+- Grant `ano.slimecheck`, `ano.biometp`, `ano.joindate` to member+ ranks
+- Grant potion effect permissions individually: `ano.speed`, `ano.regeneration`, etc.
+- Use `ano.*` for admin permissions
 
 ---
 

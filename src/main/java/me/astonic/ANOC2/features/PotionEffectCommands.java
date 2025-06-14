@@ -6,6 +6,7 @@ import me.astonic.ANOC2.utils.MessageUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -68,7 +69,12 @@ public class PotionEffectCommands implements CommandExecutor {
     
     public void registerCommands() {
         for (String commandName : potionCommands.keySet()) {
-            plugin.getCommand(commandName).setExecutor(this);
+            PluginCommand command = plugin.getCommand(commandName);
+            if (command != null) {
+                command.setExecutor(this);
+            } else {
+                plugin.getLogger().warning("Failed to register potion effect command: " + commandName + " - Command not found in plugin.yml!");
+            }
         }
     }
     
@@ -82,6 +88,11 @@ public class PotionEffectCommands implements CommandExecutor {
         Player player = (Player) sender;
         String commandName = command.getName().toLowerCase();
         
+        // Debug logging
+        if (plugin.getConfig().getBoolean("settings.debug", false)) {
+            plugin.getLogger().info("Potion effect command executed: " + commandName + " by " + player.getName());
+        }
+        
         // Check if the command is disabled
         if (!plugin.getConfig().getBoolean("potion-effects.enabled", true)) {
             MessageUtil.sendMessage(player, prefix + "&cPotion effect commands are currently disabled!");
@@ -90,7 +101,11 @@ public class PotionEffectCommands implements CommandExecutor {
         
         PotionEffectType effectType = potionCommands.get(commandName);
         if (effectType == null) {
-            MessageUtil.sendMessage(player, prefix + "&cUnknown potion effect command!");
+            MessageUtil.sendMessage(player, prefix + "&cUnknown potion effect command! (Command: " + commandName + ")");
+            if (plugin.getConfig().getBoolean("settings.debug", false)) {
+                plugin.getLogger().warning("PotionEffectType not found for command: " + commandName);
+                plugin.getLogger().info("Available commands: " + potionCommands.keySet().toString());
+            }
             return true;
         }
         
